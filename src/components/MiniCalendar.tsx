@@ -2,7 +2,7 @@ import { DayPicker } from 'react-day-picker';
 import { ko } from 'react-day-picker/locale';
 import 'react-day-picker/style.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../interface';
+import { RootState } from '../store';
 import { setDate } from '../store/calendar';
 export const MiniCalendar = () => {
   const date = useSelector((state: RootState) => state.calendar.date);

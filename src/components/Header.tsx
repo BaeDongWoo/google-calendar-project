@@ -5,7 +5,7 @@ import {
   ChevronRightIcon,
 } from '@heroicons/react/20/solid';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../interface';
+import { RootState } from '../store';
 import { setDate } from '../store/calendar';
 import { useState } from 'react';
 export const Header = () => {
