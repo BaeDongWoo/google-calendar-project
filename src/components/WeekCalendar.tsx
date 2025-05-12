@@ -10,6 +10,8 @@ import {
   setEndMin,
 } from '../store/inputModal';
 import { InputModal } from './InputModal';
+import { ShowModal } from './ShowModal';
+import { setModal } from '../store/showModal';
 export const WeekCalendar = () => {
   const date = useSelector((state: RootState) => state.calendar.date);
   const startT = useSelector((state: RootState) => state.inputModal.startTime);
@@ -18,6 +20,9 @@ export const WeekCalendar = () => {
   const showInputModal = useSelector(
     (state: RootState) => state.inputModal.showModal
   );
+  const showModal = useSelector(
+    (state: RootState) => state.showModal.showModal
+  ) as { date: string; index: number } | null;
   const days = ['일', '월', '화', '수', '목', '금', '토'];
 
   const setDaysNumber = () => {
@@ -91,20 +96,42 @@ export const WeekCalendar = () => {
           {weekSchedule &&
             /*한시간 h=10 시작위치(top) = startHour * 10 + startMin*0.25 끝위치(h) = (endHour * 10 + endMin*0.25 )-시작위치*/
             weekSchedule.map((schedule, index) => (
-              <div
-                className=" inset-0 rounded-lg bg-sky-300 hover:bg-sky-500 absolute"
-                style={{
-                  top: schedule.startHour * 40 + Number(schedule.startMin) * 10,
-                  height:
-                    schedule.endHour * 40 +
-                    Number(schedule.endMin) * 10 -
-                    (schedule.startHour * 40 + Number(schedule.startMin) * 10),
-                  marginRight: (index + 1) * 5,
-                }}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {schedule.title}
-              </div>
+              <>
+                <div
+                  className=" inset-0 rounded-lg bg-sky-300 hover:bg-sky-500 absolute"
+                  key={index}
+                  style={{
+                    top:
+                      schedule.startHour * 40 +
+                      (Number(schedule.startMin) / 60) * 40,
+                    height:
+                      schedule.endHour * 40 +
+                      (Number(schedule.endMin) / 60) * 40 -
+                      (schedule.startHour * 40 +
+                        (Number(schedule.startMin) / 60) * 40),
+                    marginRight: (index + 1) * 5,
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    dispatch(setModal({ date: formatDate(i), index }));
+                  }}
+                >
+                  {schedule.title ? schedule.title : '제목없음'}
+                </div>
+                {showModal &&
+                  showModal.date === formatDate(i) &&
+                  showModal.index === index && (
+                    <ShowModal
+                      title={schedule.title}
+                      startHour={schedule.startHour}
+                      startMin={schedule.startMin}
+                      endHour={schedule.endHour}
+                      endMin={schedule.endMin}
+                      date={daysNumber[i]}
+                      index={index}
+                    />
+                  )}
+              </>
             ))}
         </div>
       );

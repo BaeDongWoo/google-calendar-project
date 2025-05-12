@@ -45,21 +45,21 @@ export const Header = () => {
 
       <div className="flex border-2 border-solid w-36 font-bold rounded-lg justify-center m-3">
         <button
-          className={`w-1/2 px-3 py-2 ${
+          className={`w-full px-3 py-2 ${
             calendarType === 'weeks' ? `bg-blue-300` : ``
-          } rounded-l-lg`}
+          } rounded-lg`}
           onClick={() => setCalendarType('weeks')}
         >
           주간
         </button>
-        <button
+        {/* <button
           className={`w-1/2 px-3 py-2 ${
             calendarType === 'month' ? `bg-blue-300` : ``
           } rounded-r-lg`}
           onClick={() => setCalendarType('month')}
         >
           월간
-        </button>
+        </button> */}
       </div>
     </header>
   );

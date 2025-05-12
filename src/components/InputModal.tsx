@@ -16,7 +16,7 @@ export const InputModal = ({ date, startTime, endTime }: InputModalProps) => {
   const [title, setTitle] = useState('');
   const [showStartOption, setShowStartOption] = useState(false);
   const [showEndOption, setShowEndOption] = useState(false);
-  const diapatch = useDispatch();
+  const dispatch = useDispatch();
 
   const startMin = useSelector((state: RootState) => state.inputModal.startMin);
   const endMin = useSelector((state: RootState) => state.inputModal.endMin);
@@ -32,8 +32,8 @@ export const InputModal = ({ date, startTime, endTime }: InputModalProps) => {
         endMin: endMin,
       },
     };
-    diapatch(setSchedule(data));
-    diapatch(setShowModal(false));
+    dispatch(setSchedule(data));
+    dispatch(setShowModal(false));
   };
 
   const minList = ['00', '15', '30', '45'];
@@ -68,11 +68,11 @@ export const InputModal = ({ date, startTime, endTime }: InputModalProps) => {
   useEffect(() => {
     if (startTime === endTime) {
       if (Number(startMin) >= Number(endMin)) {
-        diapatch(setEndMin(endOption[0].min));
+        dispatch(setEndMin(endOption[0].min));
       }
     } else if (startTime > endTime) {
-      diapatch(setEndTime(endOption[0].hour));
-      diapatch(setEndMin(endOption[0].min));
+      dispatch(setEndTime(endOption[0].hour));
+      dispatch(setEndMin(endOption[0].min));
     }
   }, [startTime, startMin]);
   return (
@@ -86,7 +86,7 @@ export const InputModal = ({ date, startTime, endTime }: InputModalProps) => {
         <div className="flex justify-end p-2">
           <XMarkIcon
             className="size-6 cursor-pointer"
-            onClick={() => diapatch(setShowModal(false))}
+            onClick={() => dispatch(setShowModal(false))}
           />
         </div>
         <div>
@@ -118,12 +118,13 @@ export const InputModal = ({ date, startTime, endTime }: InputModalProps) => {
               ></input>
               {showStartOption && (
                 <div className="w-full mt-1 bg-white flex flex-col text-left shadow-lg overflow-y-auto h-24">
-                  {startOption.map((option: any) => (
+                  {startOption.map((option: any, index: number) => (
                     <span
                       className="p-1 flex hover:bg-gray-100"
+                      key={index}
                       onClick={() => {
-                        diapatch(setStartTime(option.hour));
-                        diapatch(setStartMin(option.min));
+                        dispatch(setStartTime(option.hour));
+                        dispatch(setStartMin(option.min));
                         setShowStartOption(false);
                       }}
                     >
@@ -144,12 +145,13 @@ export const InputModal = ({ date, startTime, endTime }: InputModalProps) => {
               ></input>
               {showEndOption && (
                 <div className="w-full mt-1 bg-white flex flex-col text-left shadow-lg overflow-y-auto h-24">
-                  {endOption.map((option: any) => (
+                  {endOption.map((option: any, index: number) => (
                     <span
                       className="p-1 flex hover:bg-gray-100"
+                      key={index}
                       onClick={() => {
-                        diapatch(setEndTime(option.hour));
-                        diapatch(setEndMin(option.min));
+                        dispatch(setEndTime(option.hour));
+                        dispatch(setEndMin(option.min));
                         setShowEndOption(false);
                       }}
                     >

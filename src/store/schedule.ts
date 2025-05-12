@@ -26,7 +26,12 @@ export const calendarSlice = createSlice({
         action.payload.data,
       ];
     },
+    remove: (state, action) => {
+      state[action.payload.date] = state[action.payload.date].filter(
+        (_, index) => action.payload.index !== index
+      );
+    },
   },
 });
-export const { setSchedule } = calendarSlice.actions;
+export const { setSchedule, remove } = calendarSlice.actions;
 export default calendarSlice.reducer;

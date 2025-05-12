@@ -16,6 +16,16 @@ export interface InputModalType {
   endMin: string;
 }
 
+export interface ShowModalType {
+  title: string;
+  date: Date;
+  startHour: number;
+  startMin: string;
+  endHour: number;
+  endMin: string;
+  index: number;
+}
+
 export interface ScheduleType {
   title: string;
   startHour: number;
